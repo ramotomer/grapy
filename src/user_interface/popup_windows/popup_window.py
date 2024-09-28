@@ -7,7 +7,7 @@ from src.main_window import MainWindow
 from src.shape_drawing import draw_rect, draw_rect_with_outline
 from src.user_interface.button import Button
 from src.user_interface.text_graphics import Text
-from usefuls import with_args
+from src.usefuls import with_args
 
 
 class PopupWindow(GraphicsObject):
@@ -59,14 +59,13 @@ class PopupWindow(GraphicsObject):
             *buttons,
         ]
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         """
         Returns whether or not the mouse is pressing the upper part of the window (where it can be moved)
         :return: `bool`
         """
-        x, y = MainWindow.main_window.get_mouse_location()
-        return self.x < x < self.x + self.width and \
-            self.y < y < self.y + TEXTBOX_HEIGHT + TEXTBOX_UPPER_PART_HEIGHT
+        return self.x < mouse_x < self.x + self.width and \
+            self.y < mouse_y < self.y + TEXTBOX_HEIGHT + TEXTBOX_UPPER_PART_HEIGHT
 
     def mark_as_selected(self):
         """

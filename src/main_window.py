@@ -2,6 +2,7 @@ import pyglet
 
 from consts import *
 from src.main_loop import MainLoop
+from src.user_interface.popup_windows.popup_window import PopupWindow
 
 
 class MainWindow(pyglet.window.Window):
@@ -120,6 +121,12 @@ class MainWindow(pyglet.window.Window):
 
             self.user_interface.dragged_object = object_the_mouse_is_on
             self.user_interface.selected_object = object_the_mouse_is_on
+
+            # TODO: move this v
+            if isinstance(object_the_mouse_is_on, PopupWindow):
+                self.user_interface.active_window = object_the_mouse_is_on
+            else:
+                self.user_interface.active_window = None
 
             if object_the_mouse_is_on is not None:
                 mouse_x, mouse_y = self.get_mouse_location()
