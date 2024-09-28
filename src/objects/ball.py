@@ -1,7 +1,7 @@
-from gui.abstracts.graphics_object import GraphicsObject
+from src.abstracts.graphics_object import GraphicsObject
 from usefuls import distance
-from gui.main_window import MainWindow
-from gui.shape_drawing import draw_circle, draw_rect
+from src.main_window import MainWindow
+from src.shape_drawing import draw_circle, draw_rect
 from consts import *
 from recordclass import recordclass
 

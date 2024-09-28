@@ -1,10 +1,10 @@
 import pyglet
 
 from consts import *
-from gui.abstracts.graphics_object import GraphicsObject
-from gui.main_loop import MainLoop
-from gui.main_window import MainWindow
-from gui.shape_drawing import draw_rect_no_fill
+from src.abstracts.graphics_object import GraphicsObject
+from src.main_loop import MainLoop
+from src.main_window import MainWindow
+from src.shape_drawing import draw_rect_no_fill
 
 
 class ImageGraphics(GraphicsObject):

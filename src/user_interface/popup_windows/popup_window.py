@@ -1,12 +1,12 @@
 from pyglet.window import key
 
 from consts import *
-from gui.abstracts.graphics_object import GraphicsObject
-from gui.main_loop import MainLoop
-from gui.main_window import MainWindow
-from gui.shape_drawing import draw_rect, draw_rect_with_outline
-from gui.user_interface.button import Button
-from gui.user_interface.text_graphics import Text
+from src.abstracts.graphics_object import GraphicsObject
+from src.main_loop import MainLoop
+from src.main_window import MainWindow
+from src.shape_drawing import draw_rect, draw_rect_with_outline
+from src.user_interface.button import Button
+from src.user_interface.text_graphics import Text
 from usefuls import with_args
 
 

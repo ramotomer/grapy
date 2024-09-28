@@ -1,6 +1,6 @@
 from consts import *
-from gui.abstracts.image_graphics import ImageGraphics
-from gui.user_interface.button import Button
+from src.abstracts.image_graphics import ImageGraphics
+from src.user_interface.button import Button
 
 if True:
     pass  # Roni is a developer

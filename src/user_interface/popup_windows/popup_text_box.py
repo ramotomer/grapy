@@ -4,9 +4,9 @@ from collections import namedtuple
 from pyglet.window import key
 
 from consts import *
-from gui.user_interface.button import Button
-from gui.user_interface.popup_windows.popup_window import PopupWindow
-from gui.user_interface.text_graphics import Text
+from src.user_interface.button import Button
+from src.user_interface.popup_windows.popup_window import PopupWindow
+from src.user_interface.text_graphics import Text
 
 ChildGraphicsObjects = namedtuple("ChildGraphicsObjects", [
     "title_text",

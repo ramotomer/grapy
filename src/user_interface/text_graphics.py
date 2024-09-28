@@ -1,7 +1,7 @@
 import pyglet
 
 from consts import *
-from gui.abstracts.graphics_object import GraphicsObject
+from src.abstracts.graphics_object import GraphicsObject
 
 
 class Text(GraphicsObject):

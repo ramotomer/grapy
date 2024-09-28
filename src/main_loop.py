@@ -8,7 +8,7 @@ class MainLoop:
     """
     This class handles everything related to the main loop of the program.
     It holds a list of all of the graphics objects that have registered their methods to the loop.
-    (read more about these in 'gui.graphics_object.py') It contains the main loop of the program, and contains methods
+    (read more about these in 'src.graphics_object.py') It contains the main loop of the program, and contains methods
     that allow us to insert new function calls into the main loop.
 
     There is only one instance of this class. That instance is saved in the class attribute `MainLoop.instance`

@@ -1,10 +1,10 @@
 from collections import namedtuple
 
 from consts import *
-from gui.abstracts.graphics_object import GraphicsObject
-from gui.main_window import MainWindow
-from gui.shape_drawing import draw_rect
-from gui.user_interface.text_graphics import Text
+from src.abstracts.graphics_object import GraphicsObject
+from src.main_window import MainWindow
+from src.shape_drawing import draw_rect
+from src.user_interface.text_graphics import Text
 
 ChildGraphicsObjects = namedtuple("ChildGraphicsObjects", "text")
 

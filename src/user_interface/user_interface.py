@@ -6,17 +6,17 @@ from pyglet.window import key
 
 from consts import *
 from exceptions import *
-from gui.main_loop import MainLoop
-from gui.main_window import MainWindow
-from gui.shape_drawing import draw_pause_rectangles, draw_rect
-from gui.user_interface.button import Button
-from gui.user_interface.popup_windows.popup_error import PopupError
-from gui.user_interface.popup_windows.popup_text_box import PopupTextBox
-from gui.user_interface.popup_windows.popup_window import PopupWindow
-from gui.user_interface.text_graphics import Text
+from src.main_loop import MainLoop
+from src.main_window import MainWindow
+from src.shape_drawing import draw_pause_rectangles, draw_rect
+from src.user_interface.button import Button
+from src.user_interface.popup_windows.popup_error import PopupError
+from src.user_interface.popup_windows.popup_text_box import PopupTextBox
+from src.user_interface.popup_windows.popup_window import PopupWindow
+from src.user_interface.text_graphics import Text
 from usefuls import with_args, called_in_order
 
-from gui.objects.ball import Ball
+from src.objects.ball import Ball
 
 
 ObjectView = namedtuple("ObjectView", [

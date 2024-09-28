@@ -3,8 +3,8 @@ import time
 import pyglet
 
 from consts import *
-from gui.abstracts.image_graphics import ImageGraphics
-from gui.main_loop import MainLoop
+from src.abstracts.image_graphics import ImageGraphics
+from src.main_loop import MainLoop
 
 
 class AnimationGraphics(ImageGraphics):

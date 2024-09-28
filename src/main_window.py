@@ -1,7 +1,7 @@
 import pyglet
 
 from consts import *
-from gui.main_loop import MainLoop
+from src.main_loop import MainLoop
 
 
 class MainWindow(pyglet.window.Window):

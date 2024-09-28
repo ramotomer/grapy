@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from gui.main_loop import MainLoop
+from src.main_loop import MainLoop
 
 
 class GraphicsObject(metaclass=ABCMeta):
