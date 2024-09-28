@@ -1,5 +1,5 @@
 from src.abstracts.graphics_object import GraphicsObject
-from usefuls import distance
+from src.usefuls import distance
 from src.main_window import MainWindow
 from src.shape_drawing import draw_circle, draw_rect
 from consts import *
@@ -20,9 +20,9 @@ class Ball(GraphicsObject):
 
         self.bounciness = bounciness
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         return distance(
-            MainWindow.main_window.get_mouse_location(),
+            (mouse_x, mouse_y),
             self.location
         ) < self.radius
 

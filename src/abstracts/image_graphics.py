@@ -57,7 +57,7 @@ class ImageGraphics(GraphicsObject):
         """toggles whether or not the image is opaque"""
         self.sprite.opacity = A_LITTLE_OPAQUE if self.sprite.opacity == NOT_OPAQUE else NOT_OPAQUE
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         """
         Returns whether or not the mouse is inside the sprite of this object in the screen.
         :return: Whether the mouse is inside the sprite or not.
