@@ -1,12 +1,9 @@
-from typing import Callable, Any, Dict, List, Tuple
+from enum import Enum, auto
+from typing import Callable, Any, Dict, List, Tuple, Optional
 
 from dataclasses import dataclass
 
 from consts import NO_MODIFIER
-
-
-MouseAction_T = Callable[[int, int], Any]
-MouseLocationCondition_T = Callable[[int, int], bool]
 
 
 @dataclass
@@ -15,12 +12,19 @@ class KeyPress:
     modifiers: int = NO_MODIFIER
 
 
+MouseAction_T = Callable[[int, int], Optional[bool]]
+MouseLocationCondition_T = Callable[[int, int], bool]
+
+
 class InputManager:
     def __init__(self) -> None:
         self._key_to_action: Dict[KeyPress, List[Callable[[], Any]]] = {}
         self._actions_on_mouse_press: List[Tuple[MouseAction_T, MouseLocationCondition_T]] = []
 
         self.mouse_x, self.mouse_y = 0, 0
+
+    def update_mouse_position(self, x: int, y: int) -> None:
+        self.mouse_x, self.mouse_y = x, y
 
     def register_key_action(self, key: int, modifiers: int, action: Callable[[], Any]) -> None:
         key_press = KeyPress(key, modifiers)
@@ -39,7 +43,9 @@ class InputManager:
 
         for action, location_condition in self._actions_on_mouse_press:
             if location_condition(self.mouse_x, self.mouse_y):
-                action(self.mouse_x, self.mouse_y)
+                should_continue = action(self.mouse_x, self.mouse_y)
+                if (not should_continue) and should_continue is not None:
+                    break
 
         # for button in reversed(reduce(concat, list(self.buttons.values()))):
         #     if not button.is_hidden and button.is_mouse_in():

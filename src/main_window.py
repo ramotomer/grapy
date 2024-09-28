@@ -1,8 +1,12 @@
 import pyglet
 
+from typing import TYPE_CHECKING
 from consts import *
 from src.main_loop import MainLoop
 from src.user_interface.popup_windows.popup_window import PopupWindow
+
+if TYPE_CHECKING:
+    from src.user_interface.input_manager import InputManager
 
 
 class MainWindow(pyglet.window.Window):
@@ -18,7 +22,7 @@ class MainWindow(pyglet.window.Window):
 
     main_window = None
 
-    def __init__(self, user_interface, *args, **kwargs):
+    def __init__(self, input_manager: InputManager, user_interface, *args, **kwargs) -> None:
         """
         Initiates the MainWindow object. opens the window.
         It receives a `UserInterface` object that is in charge of the user input and output of the program.
@@ -29,9 +33,9 @@ class MainWindow(pyglet.window.Window):
         self.set_location(*INITIAL_WINDOW_LOCATION)
         # ^ window initial location on the screen
 
-        self.mouse_x, self.mouse_y = WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2
         self.mouse_pressed = False
 
+        self.input_manager = input_manager
         self.user_interface = user_interface
 
     def get_mouse_location(self):
@@ -48,7 +52,7 @@ class MainWindow(pyglet.window.Window):
         :param dy:  The difference from the last location of the mouse
         :return:
         """
-        self.mouse_x, self.mouse_y = x, y
+        self.input_manager.update_mouse_position(x, y)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         """
@@ -62,7 +66,7 @@ class MainWindow(pyglet.window.Window):
         :param modifiers:
         :return:
         """
-        self.mouse_x, self.mouse_y = x, y
+        self.input_manager.update_mouse_position(x, y)
 
     def on_mouse_enter(self, x, y):
         """
@@ -72,7 +76,7 @@ class MainWindow(pyglet.window.Window):
         :param y:
         :return:
         """
-        self.mouse_x, self.mouse_y = x, y
+        self.input_manager.update_mouse_position(x, y)
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
         """
@@ -97,15 +101,15 @@ class MainWindow(pyglet.window.Window):
         :param modifiers:
         :return:
         """
-        try: # this try and except is done becauese for some reason it is done automatically in pyglet and it is very annoying!!!!!!
+        try:  # this try and except is done because for some reason it is done automatically in pyglet and it is very annoying!!!!!!
+
+            self.input_manager.on_mouse_press()
 
             self.mouse_pressed = True
             self._set_mouse_pressed_objects()
 
             if self.user_interface.selected_object is None and self.user_interface.is_asking_for_string:  # if pressed outside a text-box.
                 self.user_interface.end_string_request()
-
-            self.user_interface.on_mouse_press()  # this should will be last!
 
         except (TypeError, AttributeError) as err:
             print(f"error in `on_mouse_press` {err}")
@@ -116,22 +120,24 @@ class MainWindow(pyglet.window.Window):
         Sets the `selected_object` and `dragged_object` according to the mouse's press.
         :return: None
         """
-        if not self.user_interface.is_mouse_in_side_window():
-            object_the_mouse_is_on = MainLoop.instance.get_object_the_mouse_is_on()
+        if self.user_interface.is_mouse_in_side_window():
+            return
 
-            self.user_interface.dragged_object = object_the_mouse_is_on
-            self.user_interface.selected_object = object_the_mouse_is_on
+        object_the_mouse_is_on = MainLoop.instance.get_object_the_mouse_is_on()
 
-            # TODO: move this v
-            if isinstance(object_the_mouse_is_on, PopupWindow):
-                self.user_interface.active_window = object_the_mouse_is_on
-            else:
-                self.user_interface.active_window = None
+        self.user_interface.dragged_object = object_the_mouse_is_on
+        self.user_interface.selected_object = object_the_mouse_is_on
 
-            if object_the_mouse_is_on is not None:
-                mouse_x, mouse_y = self.get_mouse_location()
-                object_x, object_y = object_the_mouse_is_on.location
-                self.user_interface.dragging_point = object_x - mouse_x, object_y - mouse_y
+        # TODO: move this v
+        if isinstance(object_the_mouse_is_on, PopupWindow):
+            self.user_interface.active_window = object_the_mouse_is_on
+        else:
+            self.user_interface.active_window = None
+
+        if object_the_mouse_is_on is not None:
+            mouse_x, mouse_y = self.get_mouse_location()
+            object_x, object_y = object_the_mouse_is_on.location
+            self.user_interface.dragging_point = object_x - mouse_x, object_y - mouse_y
 
     def on_mouse_release(self, x, y, button, modifiers):
         """
@@ -152,7 +158,7 @@ class MainWindow(pyglet.window.Window):
         :param modifiers:  additional keys that are pressed (ctrl, shift, caps lock, etc..)
         :return:  None
         """
-        self.user_interface.on_key_pressed(symbol, modifiers)
+        self.input_manager.on_key_pressed(symbol, modifiers)
 
     def on_draw(self):
         """

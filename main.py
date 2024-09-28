@@ -3,11 +3,13 @@ import pyglet
 from consts import *
 from src.main_loop import MainLoop
 from src.main_window import MainWindow
+from src.user_interface.input_manager import InputManager
 from src.user_interface.user_interface import UserInterface
 
 if __name__ == '__main__':
+    input_manager = InputManager()
     user_interface = UserInterface()
-    main_window = MainWindow(user_interface, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, resizable=False)
+    main_window = MainWindow(input_manager, user_interface, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, resizable=False)
     main_loop = MainLoop(main_window)
     pyglet.clock.schedule_interval(main_window.update, FRAME_RATE)
     pyglet.app.run()

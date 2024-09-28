@@ -1,6 +1,7 @@
 from pyglet.window import key
 
 from consts import *
+from src.abstracts.clickable import Clickable
 from src.abstracts.graphics_object import GraphicsObject
 from src.main_loop import MainLoop
 from src.main_window import MainWindow
@@ -10,7 +11,7 @@ from src.user_interface.text_graphics import Text
 from src.usefuls import with_args
 
 
-class PopupWindow(GraphicsObject):
+class PopupWindow(Clickable, GraphicsObject):
     """
     A window that pops up sometime.
     It can contain buttons, text and maybe images?
@@ -66,6 +67,9 @@ class PopupWindow(GraphicsObject):
         """
         return self.x < mouse_x < self.x + self.width and \
             self.y < mouse_y < self.y + TEXTBOX_HEIGHT + TEXTBOX_UPPER_PART_HEIGHT
+
+    def on_click(self, mouse_x: int, mouse_y: int) -> None:
+        pass
 
     def mark_as_selected(self):
         """

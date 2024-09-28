@@ -1,13 +1,14 @@
 import pyglet
 
 from consts import *
+from src.abstracts.clickable import Clickable
 from src.abstracts.graphics_object import GraphicsObject
 from src.main_loop import MainLoop
 from src.main_window import MainWindow
 from src.shape_drawing import draw_rect_no_fill
 
 
-class ImageGraphics(GraphicsObject):
+class ImageGraphics(Clickable, GraphicsObject):
     """
     This class is a superclass of any `GraphicsObject` subclass which uses an image in its `draw` method.
     Put simply, it is a graphics object with a picture.
@@ -67,6 +68,9 @@ class ImageGraphics(GraphicsObject):
                         (self.y < mouse_y < self.y + self.sprite.height)
         return (self.x - (self.sprite.width / 2.0) < mouse_x < self.x + (self.sprite.width / 2.0)) and\
                 (self.y - (self.sprite.height / 2.0) < mouse_y < self.y + (self.sprite.height / 2.0))
+
+    def on_click(self, mouse_x: int, mouse_y: int) -> None:
+        pass
 
     def get_center(self):
         """
