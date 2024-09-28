@@ -59,9 +59,8 @@ class Button(GraphicsObject):
         self.padding = padding
         self.move()
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         """Returns whether or not the mouse is located inside of the button."""
-        mouse_x, mouse_y = MainWindow.main_window.get_mouse_location()
         return (self.x < mouse_x < self.x + self.width) and \
                (self.y < mouse_y < self.y + self.height)
 

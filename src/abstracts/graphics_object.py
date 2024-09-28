@@ -56,7 +56,7 @@ class GraphicsObject(metaclass=ABCMeta):
     def can_be_viewed(self):
         return hasattr(self, "start_viewing") and hasattr(self, "end_viewing")
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         """
         Returns whether or not the mouse is located inside this graphics object.
         :return: None
