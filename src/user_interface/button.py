@@ -1,6 +1,7 @@
 from collections import namedtuple
 
 from consts import *
+from src.abstracts.clickable import Clickable
 from src.abstracts.graphics_object import GraphicsObject
 from src.main_window import MainWindow
 from src.shape_drawing import draw_rect
@@ -9,7 +10,7 @@ from src.user_interface.text_graphics import Text
 ChildGraphicsObjects = namedtuple("ChildGraphicsObjects", "text")
 
 
-class Button(GraphicsObject):
+class Button(Clickable, GraphicsObject):
     """
     A class of a button which you can press and assign text and an action to.
     """
@@ -59,11 +60,13 @@ class Button(GraphicsObject):
         self.padding = padding
         self.move()
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         """Returns whether or not the mouse is located inside of the button."""
-        mouse_x, mouse_y = MainWindow.main_window.get_mouse_location()
         return (self.x < mouse_x < self.x + self.width) and \
                (self.y < mouse_y < self.y + self.height)
+
+    def on_click(self, mouse_x: int, mouse_y: int) -> None:
+        pass
 
     def toggle_showing(self):
         """

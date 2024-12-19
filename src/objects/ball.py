@@ -1,5 +1,6 @@
+from src.abstracts.clickable import Clickable
 from src.abstracts.graphics_object import GraphicsObject
-from usefuls import distance
+from src.usefuls import distance
 from src.main_window import MainWindow
 from src.shape_drawing import draw_circle, draw_rect
 from consts import *
@@ -9,7 +10,7 @@ from recordclass import recordclass
 Vector = recordclass("Vector", "x y")
 
 
-class Ball(GraphicsObject):
+class Ball(Clickable, GraphicsObject):
     def __init__(self, x, y, x_velocity=0, y_velocity=0, rad=20, color=LIGHT_BLUE, gravity=-0.5, bounciness=0.9):
         super(Ball, self).__init__(x, y, centered=True, is_pressable=True)
         self.radius = rad
@@ -20,11 +21,14 @@ class Ball(GraphicsObject):
 
         self.bounciness = bounciness
 
-    def is_mouse_in(self):
+    def is_mouse_in(self, mouse_x: int, mouse_y: int) -> bool:
         return distance(
-            MainWindow.main_window.get_mouse_location(),
+            (mouse_x, mouse_y),
             self.location
         ) < self.radius
+
+    def on_click(self, mouse_x: int, mouse_y: int) -> None:
+        pass  # TODO: move logic here
 
     def start_viewing(self, ui):
         return None, "Ball", None

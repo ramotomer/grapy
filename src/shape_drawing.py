@@ -3,7 +3,7 @@ from itertools import chain
 import pyglet
 
 from consts import *
-from usefuls import circular_coordinates, sine_wave_coordinates
+from src.usefuls import circular_coordinates, sine_wave_coordinates
 
 
 def draw_line(point_1, point_2, color=WHITE):

@@ -14,7 +14,7 @@ from src.user_interface.popup_windows.popup_error import PopupError
 from src.user_interface.popup_windows.popup_text_box import PopupTextBox
 from src.user_interface.popup_windows.popup_window import PopupWindow
 from src.user_interface.text_graphics import Text
-from usefuls import with_args, called_in_order
+from src.usefuls import with_args, called_in_order
 
 from src.objects.ball import Ball
 
@@ -81,12 +81,10 @@ class UserInterface:
         # ^ maps what to do when the screen is pressed in each `mode`.
 
         self.mode = SIMULATION_MODE
-        self.other_selected_object = None
 
+        self.selected_object = None
         self.dragged_object = None
         self.dragging_point = 0, 0
-
-        self.__selected_object = None
 
         self.object_view = None
 
@@ -120,19 +118,6 @@ class UserInterface:
         if window is not None:
             window.activate()
         self.__active_window = window
-
-    @property
-    def selected_object(self):
-        return self.__selected_object
-
-    @selected_object.setter
-    def selected_object(self, graphics_object):
-        self.__selected_object = graphics_object
-
-        if isinstance(graphics_object, PopupWindow):
-            self.active_window = graphics_object
-        else:
-            self.active_window = None
 
     def show(self):
         """
@@ -269,9 +254,6 @@ class UserInterface:
         (especially VIEW_MODE)
         :return: None
         """
-        if self.mode == CONNECTING_MODE and new_mode != CONNECTING_MODE:
-            self.other_selected_object = None
-
         if new_mode == VIEW_MODE:
             self.end_object_view()
             self.mode = new_mode
@@ -308,38 +290,6 @@ class UserInterface:
         :return: None
         """
         MainLoop.instance.toggle_pause()
-
-    def on_mouse_press(self):
-        """
-        Happens when the mouse is pressed.
-        Decides what to do according to the mode we are now in.
-        The choosing of a selected and dragged objects should be performed BEFORE this is called!
-        :return: None
-        """
-        for button in reversed(reduce(concat, list(self.buttons.values()))):
-            if not button.is_hidden and button.is_mouse_in():
-                button.action()
-                break
-        else:
-            self.action_at_press_by_mode[self.mode]()
-
-    def on_key_pressed(self, symbol, modifiers):
-        """
-        Called when a key is pressed
-        :param symbol:
-        :param modifiers:
-        :return:
-        """
-        if isinstance(self.active_window, PopupTextBox):
-            self.active_window.pressed(symbol, modifiers)
-        else:
-            modified_key = (symbol, int(bin(modifiers)[2:][-4:], base=2))
-            for button_id in sorted(list(self.buttons)):
-                for button in self.buttons[button_id]:
-                    if button.key == modified_key:
-                        button.action()
-                        return
-            self.key_to_action.get(modified_key, lambda: None)()
 
     def view_mode_at_press(self):
         """
